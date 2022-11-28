@@ -32,6 +32,11 @@ namespace la_mia_pizzeria_static.Models.Repositories
                 
             
         }
+
+        public List<Pizza> Get(bool relation)
+        {
+            return new List<Pizza>();
+        }
         public void Create(Pizza pizza, List<int> selectedIngredients)
         {
             pizza.Category = categoryRepository.Get(pizza.CategoryId);

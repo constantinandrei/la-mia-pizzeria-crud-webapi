@@ -11,6 +11,7 @@ namespace la_mia_pizzeria_static.Models.Repositories
         void Delete(Pizza pizza);
         bool Exists(int id);
         List<Pizza> Get();
+        List<Pizza> Get(bool relation);
         Pizza Get(int id);
         List<Pizza> GetByCategoryId(int categoryId);
         void Update(Pizza updatedPizza, List<int> selectedIngredients);

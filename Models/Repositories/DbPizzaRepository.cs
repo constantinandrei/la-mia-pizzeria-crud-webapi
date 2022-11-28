@@ -24,8 +24,17 @@ namespace la_mia_pizzeria_static.Models.Repositories
         }
         public List<Pizza> Get()
         {
+      
             return db.Pizzas.Include(p => p.Category).Include(p => p.Ingredients).ToList();
         }
+
+        public List<Pizza> Get(bool relations)
+        {
+            if (relations)
+                return Get();
+            return db.Pizzas.ToList();
+        }
+
 
         public Pizza Get(int id)
         {
@@ -63,6 +72,7 @@ namespace la_mia_pizzeria_static.Models.Repositories
         {
             PizzaForm formData = CreateForm();
             formData.Pizza = Get(id);
+            formData.Ingredients.Clear();
             List<Ingredient> IngredientsList = ingredientRepository.Get();
             foreach (Ingredient ingredient in IngredientsList)
             {

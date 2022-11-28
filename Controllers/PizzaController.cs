@@ -19,7 +19,7 @@ namespace la_mia_pizzeria_static.Controllers
 
         public PizzaController()
         {
-            pizzaRepository = new ListPizzaRepository();
+            pizzaRepository = new DbPizzaRepository();
         }
         public IActionResult Index()
         {
