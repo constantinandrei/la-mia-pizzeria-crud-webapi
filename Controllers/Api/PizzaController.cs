@@ -16,7 +16,7 @@ namespace la_mia_pizzeria_static.Controllers.Api
         public IActionResult Get()
         
         {
-            return Ok(_pizzaRepository.Get(false));
+            return Ok(_pizzaRepository.Get());
         }
     }
 }
