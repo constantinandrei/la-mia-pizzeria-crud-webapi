@@ -29,11 +29,18 @@
                                             <h5 class="card-title">${pizza.name}</h5>
                                             <p class="card-text">Categoria: ${pizza.category.name}</p>
                                             <p class="card-text">${pizza.description}</p>
+                                            <p class="card-text" id="ing_pizza${pizza.id}">Ingredienti: </p>
                                             <p class="card-text">${pizza.price} €</p>
                                           </div>
                                         </div>
                                     </div>
                                     `;
+                let ingredienti = '';
+                pizza.ingredients.forEach((ing, i, array) => {
+                    const delimitator = i < array.length - 1 ? ', ' : '.'
+                    ingredienti += ing.name + delimitator
+                })
+                document.getElementById('ing_pizza' + pizza.id).innerHTML += ingredienti;
             });
         }
     }).catch(error => {
