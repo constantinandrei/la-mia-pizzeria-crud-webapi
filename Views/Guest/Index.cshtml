@@ -27,7 +27,7 @@
 
     let timeoutId = null;
     function apiSearch(e){
-        if (e.target.value == null){
+        if (e.target.value === ''){
             getPizzaList();
             return;
         }
@@ -40,11 +40,10 @@
         timeoutId = setTimeout(() => {
                 axios.get('/api/pizza/search', {
                     params: {
-                        name: e.target.value
+                        title: e.target.value
                     }
                 }).then(resp => {
-                    console.log(resp)
-                    console.log(e)
+                    renderPizzaList(resp.data)
                 }).catch(error => console.log(error))
         }, 1500)
     }

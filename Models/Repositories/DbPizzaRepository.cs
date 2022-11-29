@@ -125,7 +125,7 @@ namespace la_mia_pizzeria_static.Models.Repositories
 
         public List<Pizza> SearchByTitle(string title)
         {
-            return db.Pizzas.Where(pizza => pizza.Name.ToLower().Contains(title.ToLower())).Include("Ingredients").Include("Categories").ToList();
+            return db.Pizzas.Where(pizza => pizza.Name.ToLower().Contains(title.ToLower())).Include("Ingredients").Include("Category").ToList();
         }
     }
 }
