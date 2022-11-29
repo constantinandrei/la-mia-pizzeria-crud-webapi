@@ -3,6 +3,10 @@
         <h3>Non ci sono pizze inderitr</h3>
     </div>
 </div>
+<div class="row justify-content-center">  
+    <input type="text" class="form-control" id="pizza_search" placeholder="Cerca la tua pizza">
+</div>
+
 <div class="row pizza_table d-none">
    
 </div>
@@ -10,9 +14,40 @@
 @section Scripts{
     <script type="text/javascript">
 
-    axios.get('/api/pizza/get').then(res => renderPizzaList(res.data)).catch(error => {
-        console.log(error);
-    })
+    getPizzaList();
+
+    function getPizzaList(){
+            axios.get('/api/pizza/get').then(res => renderPizzaList(res.data)).catch(error => {
+                console.log(error);
+            })
+    };
+    
+
+    document.getElementById('pizza_search').addEventListener('keyup', apiSearch);
+
+    let timeoutId = null;
+    function apiSearch(e){
+        if (e.target.value == null){
+            getPizzaList();
+            return;
+        }
+            
+
+        if (timeoutId != null){
+                clearTimeout(timeoutId)
+        }
+            
+        timeoutId = setTimeout(() => {
+                axios.get('/api/pizza/search', {
+                    params: {
+                        name: e.target.value
+                    }
+                }).then(resp => {
+                    console.log(resp)
+                    console.log(e)
+                }).catch(error => console.log(error))
+        }, 1500)
+    }
 
     function renderPizzaList(pizzaList){
             if (pizzaList.length == 0) {

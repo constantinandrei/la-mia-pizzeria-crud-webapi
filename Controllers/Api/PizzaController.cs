@@ -18,5 +18,10 @@ namespace la_mia_pizzeria_static.Controllers.Api
         {
             return Ok(_pizzaRepository.Get());
         }
+
+        public IActionResult Search(string title)
+        {
+            return Ok(_pizzaRepository.SearchByTitle(title));
+        }
     }
 }
