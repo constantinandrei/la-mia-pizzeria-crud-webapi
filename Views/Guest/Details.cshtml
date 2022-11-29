@@ -1,0 +1,52 @@
+﻿@model int
+
+<div class="row no_pizza text-center d-none">
+    <div class="col-6">
+        <h3>Pizza non trovata</h3>
+    </div>
+</div>
+
+<div class="row pizza_table d-none">
+   
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+
+    axios.get('/api/pizza/details/@Model').then(resp => renderPizza(resp.data)).catch(error => {
+            document.querySelector('.no_pizza').classList.remove('d-none');
+            document.querySelector('.pizza_table').classList.add('d-none');
+    })
+
+    function renderPizza(pizza){
+
+                document.querySelector('.pizza_table').classList.remove('d-none');
+                document.querySelector('.no_pizza').classList.add('d-none');
+                document.querySelector('.pizza_table').innerHTML = '';
+            
+
+            document.querySelector('.pizza_table').innerHTML += `<div class="col-12 col-md-4 p-2">
+                        <div class="card post h-100">
+                            <img src="${pizza.image}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                            <h5 class="card-title">${pizza.name}</h5>
+                            <p class="card-text">Categoria: ${pizza.category.name}</p>
+                            <p class="card-text">${pizza.description}</p>
+                            <p class="card-text" id="ing_pizza${pizza.id}">Ingredienti: </p>
+                            <p class="card-text">${pizza.price} €</p>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+            let ingredienti = '';
+            pizza.ingredients.forEach((ing, i, array) => {
+                const delimitator = i < array.length - 1 ? ', ' : '.'
+                ingredienti += ing.name + delimitator
+            })
+            document.getElementById('ing_pizza' + pizza.id).innerHTML += ingredienti;
+    }
+
+</script>
+}
+
+
