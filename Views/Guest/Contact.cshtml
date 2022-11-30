@@ -47,7 +47,7 @@
         function sendMessage(e){
             e.preventDefault();
             axios.post('/api/message/', readInput()).then(resp => {
-                console.log(resp)
+                messageRegistered()
             }).catch(error => {
                 handleFeedback(error.response.data.errors)
             })
@@ -67,6 +67,14 @@
 
             return data
         }
+
+        function messageRegistered(){
+            swal("Messaggio inserito correttamente!", "ok").then(() => location.reload())
+            
+
+        }
+
+
 
         function setFeedbackClasses(inputElement, messageElement, messageArray, invalid){
             if (invalid){
