@@ -5,7 +5,7 @@
   <div class="col-md-4">
     <label for="nome" class="form-label">Nome</label>
     <input type="text" class="form-control" id="nome">
-    <div class="">
+        <div class="" id="name_feedback">
       
     </div>
   </div>
@@ -13,22 +13,21 @@
   <div class="col-md-6">
     <label for="email" class="form-label">Email</label>
     <input type="email" class="form-control" id="email">
-    <div class="">
+        <div class="" id="email_feedback">
       
     </div>
   </div>
   <div class="col-md-3">
     <label for="titolo" class="form-label">Titolo</label>
     <input type="text" class="form-control" id="titolo">
-    <div class="">
+        <div class="" id="title_feedback">
       
     </div>
   </div>
     <div class="mb-3">
         <label for="messaggio" class="form-label">Messaggio</label>
-        <textarea class="form-control is-invalid" id="messaggio"></textarea>
-        <div class="">
-            Please enter a message in the textarea.
+        <textarea class="form-control" id="messaggio"></textarea>
+        <div class="" id="body_feedback">
         </div>
     </div>
   <div class="col-12">
@@ -49,6 +48,8 @@
             e.preventDefault();
             axios.post('/api/message/', readInput()).then(resp => {
                 console.log(resp)
+            }).catch(error => {
+                handleFeedback(error.response.data.errors)
             })
         }
       
@@ -66,7 +67,40 @@
 
             return data
         }
+
+        function setFeedbackClasses(inputElement, messageElement, messageArray, invalid){
+            if (invalid){
+                messageElement.classList.add("invalid-feedback")
+                messageElement.innerHTML = messageArray[0]
+                inputElement.classList.add("is-invalid")
+            } else {
+                messageElement.classList.remove("invalid-feedback")
+                messageElement.innerHTML = ''
+                inputElement.classList.add("is-valid")
+                inputElement.classList.remove("is-invalid")
+            }
+            
+        }
+
     
+        function handleFeedback(errors){
+            const nameInput = document.getElementById('nome')
+            const nameFeedback = document.getElementById('name_feedback')
+            const emailInput = document.getElementById('email')
+            const emailFeedback = document.getElementById('email_feedback')
+            const titleInput = document.getElementById('titolo')
+            const titleFeedback = document.getElementById('title_feedback')
+            const bodyInput = document.getElementById('messaggio')
+            const bodyFeedback = document.getElementById('body_feedback')
+            
+            
+                setFeedbackClasses(nameInput, nameFeedback, errors.Name ?? '', 'Name' in errors)
+                setFeedbackClasses(emailInput, emailFeedback, errors.Email ?? '', 'Email' in errors)
+                setFeedbackClasses(titleInput, titleFeedback, errors.Title ?? '', 'Title' in errors)
+                setFeedbackClasses(bodyInput, bodyFeedback, errors.Body ?? '', 'Body' in errors)
+            
+            
+        }
     
     </script>
 }
