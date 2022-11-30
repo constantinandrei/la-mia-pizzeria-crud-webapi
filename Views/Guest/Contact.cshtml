@@ -1,6 +1,40 @@
 ﻿@{
     Layout = "_Guest_Layout";
 }
+<form onsubmit="sendMessage(event)" class="row g-3 needs-validation" novalidate>
+  <div class="col-md-4">
+    <label for="nome" class="form-label">Nome</label>
+    <input type="text" class="form-control" id="nome">
+    <div class="">
+      
+    </div>
+  </div>
+  
+  <div class="col-md-6">
+    <label for="email" class="form-label">Email</label>
+    <input type="email" class="form-control" id="email">
+    <div class="">
+      
+    </div>
+  </div>
+  <div class="col-md-3">
+    <label for="titolo" class="form-label">Titolo</label>
+    <input type="text" class="form-control" id="titolo">
+    <div class="">
+      
+    </div>
+  </div>
+    <div class="mb-3">
+        <label for="messaggio" class="form-label">Messaggio</label>
+        <textarea class="form-control is-invalid" id="messaggio"></textarea>
+        <div class="">
+            Please enter a message in the textarea.
+        </div>
+    </div>
+  <div class="col-12">
+    <button class="btn btn-primary" type="submit">Submit form</button>
+  </div>
+</form>
 
 <div class="row justify-content-center">
     <div class="col-12 col-md-8 col-xl-6">
@@ -10,15 +44,20 @@
 
 @section Scripts{
     <script type="text/javascript">
+
+        function sendMessage(e){
+            e.preventDefault();
+            axios.post('/api/message/', {
+                Name: $('#nome').val(),
+                Email: $('#email').val(),
+                Title: $('#titolo').val(),
+                Body: $('#messaggio').val()
+            }).then(resp => {
+                console.log(resp)
+            })
+        }
       
-    axios.post('/api/message/', {
-        name : '',
-        email : '',
-        title : '',
-        body : ''
-    }).then(resp => {
-        console.log(resp)
-    })
+   
     
     
     </script>
