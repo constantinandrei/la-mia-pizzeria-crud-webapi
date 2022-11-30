@@ -47,17 +47,25 @@
 
         function sendMessage(e){
             e.preventDefault();
-            axios.post('/api/message/', {
-                Name: $('#nome').val(),
-                Email: $('#email').val(),
-                Title: $('#titolo').val(),
-                Body: $('#messaggio').val()
-            }).then(resp => {
+            axios.post('/api/message/', readInput()).then(resp => {
                 console.log(resp)
             })
         }
       
-   
+        function readInput(){
+            let name = $('#nome').val()
+            let email = $('#email').val()
+            let title = $('#titolo').val()
+            let body = $('#messaggio').val()
+            let data = {
+                Name: name === '' ? null : name,
+                Email: email === '' ? null : title,
+                Title: title === '' ? null : body,
+                Body: body === '' ? null : body
+            }
+
+            return data
+        }
     
     
     </script>

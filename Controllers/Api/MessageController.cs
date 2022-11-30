@@ -19,7 +19,8 @@ namespace la_mia_pizzeria_static.Controllers.Api
         [HttpPost]
         public IActionResult Create(Message message)
         {
-            return Ok("funziona");
+            messageRepository.Create(message);
+            return Ok(message);
         }
     }
 }
