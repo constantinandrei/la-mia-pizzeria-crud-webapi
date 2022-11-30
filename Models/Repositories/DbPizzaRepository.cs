@@ -39,7 +39,7 @@ namespace la_mia_pizzeria_static.Models.Repositories
 
         public Pizza Get(int id)
         {
-            return db.Pizzas.Where(p => p.Id == id).Include(p => p.Category).FirstOrDefault();
+            return db.Pizzas.Where(p => p.Id == id).Include(p => p.Category).Include(p => p.Ingredients).FirstOrDefault();
         }
 
         public List<Pizza> GetByCategoryId(int categoryId)

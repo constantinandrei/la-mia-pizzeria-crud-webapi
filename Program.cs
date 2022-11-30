@@ -10,6 +10,7 @@ builder.Services.AddDbContext<PizzaDbContext>();
 builder.Services.AddScoped<IDbPizzaRepository, DbPizzaRepository>();
 builder.Services.AddScoped<IDbCategoryRepository, DbCategoryRepository>();
 builder.Services.AddScoped<IDbIngredientRepository, DbIngredientRepository>();
+builder.Services.AddScoped<IDbMessageRepository, DbMessageRepository>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.AddControllers().AddJsonOptions(x =>

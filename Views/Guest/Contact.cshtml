@@ -7,3 +7,19 @@
 
     </div>
 </div>
+
+@section Scripts{
+    <script type="text/javascript">
+      
+    axios.post('/api/message/', {
+        name : '',
+        email : '',
+        title : '',
+        body : ''
+    }).then(resp => {
+        console.log(resp)
+    })
+    
+    
+    </script>
+}
