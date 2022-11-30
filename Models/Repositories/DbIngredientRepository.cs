@@ -7,9 +7,9 @@ namespace la_mia_pizzeria_static.Models.Repositories
     public class DbIngredientRepository : IDbIngredientRepository
     {
         private PizzaDbContext db;
-        public DbIngredientRepository()
+        public DbIngredientRepository(PizzaDbContext _db)
         {
-            db = PizzaDbContext.GetInstance;
+            db = _db;
         }
 
         public List<Ingredient> Get()

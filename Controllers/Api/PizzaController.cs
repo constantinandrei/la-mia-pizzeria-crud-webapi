@@ -9,9 +9,9 @@ namespace la_mia_pizzeria_static.Controllers.Api
     public class PizzaController : ControllerBase
     {
         IDbPizzaRepository _pizzaRepository;
-        public PizzaController()
+        public PizzaController(IDbPizzaRepository _pizza)
         {
-            _pizzaRepository = new DbPizzaRepository();    
+            _pizzaRepository = _pizza;    
         }
         public IActionResult Get()
         

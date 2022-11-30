@@ -1,3 +1,4 @@
+using la_mia_pizzeria_static.Data;
 using la_mia_pizzeria_static.Models.Repositories;
 using System.Text.Json.Serialization;
 
@@ -5,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-
+builder.Services.AddDbContext<PizzaDbContext>();
 builder.Services.AddScoped<IDbPizzaRepository, DbPizzaRepository>();
 builder.Services.AddScoped<IDbCategoryRepository, DbCategoryRepository>();
 builder.Services.AddScoped<IDbIngredientRepository, DbIngredientRepository>();

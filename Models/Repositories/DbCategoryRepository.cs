@@ -6,9 +6,9 @@ namespace la_mia_pizzeria_static.Models.Repositories
     {
         private PizzaDbContext db;
 
-        public DbCategoryRepository()
+        public DbCategoryRepository(PizzaDbContext _db)
         {
-            db = PizzaDbContext.GetInstance;
+            db = _db;
         }
         public bool Exists(int id)
         {

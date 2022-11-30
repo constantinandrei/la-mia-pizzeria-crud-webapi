@@ -10,14 +10,14 @@ namespace la_mia_pizzeria_static.Models.Repositories
     public class DbPizzaRepository : IDbPizzaRepository
     {
         private PizzaDbContext db;
-        private DbIngredientRepository ingredientRepository;
-        private DbCategoryRepository categoryRepository;
+        private IDbIngredientRepository ingredientRepository;
+        private IDbCategoryRepository categoryRepository;
 
-        public DbPizzaRepository()
+        public DbPizzaRepository(PizzaDbContext _db, IDbIngredientRepository _ingredient, IDbCategoryRepository _category)
         {
-            db = PizzaDbContext.GetInstance;
-            ingredientRepository = new DbIngredientRepository();
-            categoryRepository = new DbCategoryRepository();
+            db = _db;
+            ingredientRepository = _ingredient;
+            categoryRepository = _category;
         }
         public bool Exists(int id)
         {
