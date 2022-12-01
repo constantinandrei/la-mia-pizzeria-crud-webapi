@@ -10,7 +10,7 @@ var connectionString = builder.Configuration.GetConnectionString("PizzaDbContext
     .AddEntityFrameworkStores<PizzaDbContext>();
 // Add services to the container.
 
-builder.Services.AddDbContext<PizzaDbContext>();
+//builder.Services.AddDbContext<PizzaDbContext>();
 builder.Services.AddScoped<IDbPizzaRepository, DbPizzaRepository>();
 builder.Services.AddScoped<IDbCategoryRepository, DbCategoryRepository>();
 builder.Services.AddScoped<IDbIngredientRepository, DbIngredientRepository>();
