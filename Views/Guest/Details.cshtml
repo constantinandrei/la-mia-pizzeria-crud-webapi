@@ -49,7 +49,10 @@
 @section Scripts{
     <script type="text/javascript">
 
-    axios.get('/api/pizza/details/@Model').then(resp => renderPizza(resp.data)).catch(error => {
+    axios.get('/api/pizza/details/@Model').then(resp => {
+        renderPizza(resp.data)
+        console.log(resp.data)
+    }).catch(error => {
             document.querySelector('.no_pizza').classList.remove('d-none');
             document.querySelector('.pizza_table').classList.add('d-none');
     })
