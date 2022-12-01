@@ -109,15 +109,24 @@
         function removeClass(id, cl) {
             el(id).classList.remove(cl)
         }
-
+    let buttons = []
     function renderCommentList(elementId, cList){
         const htmlElement = el(elementId)
-        cList.forEach(comment => htmlElement.innerHTML += renderComment(comment))
+        cList.forEach(comment => {
+            htmlElement.innerHTML += renderComment(comment)
+            let index = 0
+            
+            buttons.push(document.getElementById('update_comment_' + comment.id))
+            buttons[index].addEventListener('click', function(){
+                updateForm(comment)
+            index++;
+            })
+        })
     }
 
     function renderComment(comment){
         const commentHtml = `
-                <div class="col-md-11 col-lg-9 col-xl-7">
+                <div id="comment_${comment.id}" class="col-md-11 col-lg-9 col-xl-7">
 
                         <div class="d-flex flex-start">
                             <div class="card w-100">
@@ -143,6 +152,15 @@
     }
 
         function sendComment(e) {
+            e.preventDefault();
+            axios.post('/api/comment/', readInput()).then(resp => {
+                messageRegistered()
+            }).catch(error => {
+                handleFeedback(error.response.data.errors)
+            })
+        }
+
+        function updateComment(e) {
             e.preventDefault();
             axios.post('/api/comment/', readInput()).then(resp => {
                 messageRegistered()
@@ -204,7 +222,44 @@
             setFeedbackClasses(titleInput, titleFeedback, errors.Title ?? '', 'Title' in errors)
             setFeedbackClasses(bodyInput, bodyFeedback, errors.Body ?? '', 'Body' in errors)
 
+        }
 
+        function updateForm(comment){
+
+            const element = el('comment_' + comment.id)
+            element.innerHTML = `
+                    <form onsubmit="updateComment(event)" class="col-md-11 col-lg-9 col-xl-7 row justify-content-center mt-3" novalidate>
+                        <div class="col-md-5">
+                            <label for="nome" class="form-label">Nome</label>
+                            <input type="text" class="form-control" id="nome" value=${comment.userName}>
+                            <div class="" id="name_feedback">
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" value="${comment.userEmail}">
+                            <div class="" id="email_feedback">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="stars" class="form-label">Voto</label>
+                            <input type="number" class="form-control" id="stars" value="${comment.stars}">
+                            <div class="" id="stars_feedback">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="comment" class="form-label">Commento</label>
+                            <textarea class="form-control" id="comment">${comment.commentText}</textarea>
+                            <div class="" id="comment_feedback">
+                            </div>
+                        </div>
+                        <div class="col-10">
+                            <button class="btn btn-primary" type="submit">Invia</button>
+                        </div>
+                    </form>
+            
+            `
         }
 
 </script>
