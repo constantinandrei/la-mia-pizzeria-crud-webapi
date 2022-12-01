@@ -2,6 +2,7 @@
 using la_mia_pizzeria_static.Models;
 using la_mia_pizzeria_static.Models.Form;
 using la_mia_pizzeria_static.Models.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,7 @@ using System.Data;
 
 namespace la_mia_pizzeria_static.Controllers
 {
-    
+    [Authorize]
     public class PizzaController : Controller
     {
      
