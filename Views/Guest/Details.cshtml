@@ -14,34 +14,9 @@
    
 </div>
 <section style="background-color: #e7effd;">
-    <div class="container my-5 py-5 text-dark">
-        <div class="row d-flex justify-content-center">
-            <div class="col-md-11 col-lg-9 col-xl-7">
-
-                <div class="d-flex flex-start">
-                    <img class="rounded-circle shadow-1-strong me-3"
-                         src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(31).webp" alt="avatar" width="65"
-                         height="65" />
-                    <div class="card w-100">
-                        <div class="card-body p-4">
-                            <div class="">
-                                <h5>Mindy Campbell</h5>
-                                <p>
-                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Delectus
-                                    cumque doloribus dolorum dolor repellat nemo animi at iure autem fuga
-                                    cupiditate architecto ut quam provident neque, inventore nisi eos quas?
-                                </p>
-
-                                <div class="d-flex g-3 justify-content-end align-items-center">
-                                    <button href="#!" class="btn btn-sm btn-danger me-3"> Elimina</button>
-                                    <button href="#!" class="btn btn-sm btn-outline-primary">Modifica</button>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div id="comments" class="container my-5 py-5 text-dark d-none">
+        <div id="comments_row" class="row d-flex justify-content-center">
+            
         </div>
     </div>
 </section>
@@ -51,7 +26,6 @@
 
     axios.get('/api/pizza/details/@Model').then(resp => {
         renderPizza(resp.data)
-        console.log(resp.data)
     }).catch(error => {
             document.querySelector('.no_pizza').classList.remove('d-none');
             document.querySelector('.pizza_table').classList.add('d-none');
@@ -83,6 +57,56 @@
                 ingredienti += ing.name + delimitator
             })
             document.getElementById('ing_pizza' + pizza.id).innerHTML += ingredienti;
+
+            if (pizza.comments){
+                show('comments')
+                console.log(pizza.comments)
+                renderCommentList('comments_row', pizza.comments)
+            }
+    }
+
+    function el(id){
+        return document.getElementById(id)
+    }
+
+    function hide(id){
+        el(id).classList.add('d-none')
+    }
+
+        function show(id) {
+            el(id).classList.remove('d-none')
+        }
+
+    function renderCommentList(elementId, cList){
+        const htmlElement = el(elementId)
+        cList.forEach(comment => htmlElement.innerHTML += renderComment(comment))
+    }
+
+    function renderComment(comment){
+        const commentHtml = `
+                <div class="col-md-11 col-lg-9 col-xl-7">
+
+                        <div class="d-flex flex-start">
+                            <div class="card w-100">
+                                <div class="card-body p-4">
+                                    <div class="">
+                                        <h5>${comment.userName}</h5>
+                                        <p>
+                                            ${comment.commentText}
+                                        </p>
+
+                                        <div class="d-flex g-3 justify-content-end align-items-center">
+                                            <button id="delete_comment_${comment.id}" class="btn btn-sm btn-danger me-3"> Elimina</button>
+                                                    <button id="update_comment_${comment.id}" class="btn btn-sm btn-outline-primary">Modifica</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        `
+        return commentHtml;
     }
 
 </script>
