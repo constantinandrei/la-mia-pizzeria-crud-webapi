@@ -1,4 +1,5 @@
-﻿using la_mia_pizzeria_static.Models.Repositories;
+﻿using la_mia_pizzeria_static.Models;
+using la_mia_pizzeria_static.Models.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace la_mia_pizzeria_static.Controllers.Api
@@ -16,6 +17,13 @@ namespace la_mia_pizzeria_static.Controllers.Api
         public IActionResult Index(int pizzaId)
         {
             return Ok(commentRepository.Get(pizzaId));
+        }
+
+        [HttpPost]
+        public IActionResult Create(Comment comment)
+        {
+            commentRepository.Create(comment);
+            return Ok(comment);
         }
     }
 }

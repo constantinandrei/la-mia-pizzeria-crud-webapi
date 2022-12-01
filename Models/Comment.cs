@@ -12,6 +12,6 @@ namespace la_mia_pizzeria_static.Models
         [Range(0, 5)]
         public int Stars { get; set; }
         public int PizzaId { get; set; }
-        public Pizza Pizza { get; set; }
+        public Pizza? Pizza { get; set; }
     }
 }

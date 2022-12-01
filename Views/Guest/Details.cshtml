@@ -13,10 +13,44 @@
 <div class="row pizza_table d-none">
    
 </div>
+
 <section style="background-color: #e7effd;">
-    <div id="comments" class="container my-5 py-5 text-dark d-none">
-        <div id="comments_row" class="row d-flex justify-content-center">
+    <div id="comments" class="container my-5 py-5 text-dark">
+        <div id="comments_row" class="row d-flex justify-content-center mb-3">
             
+        </div>
+        <div class="row d-flex justify-content-center">
+            <h4>Aggiungi un commento</h4>
+            <form onsubmit="sendComment(event)" class="col-md-11 col-lg-9 col-xl-7 row justify-content-center mt-3" novalidate>
+                <div class="col-md-5">
+                    <label for="nome" class="form-label">Nome</label>
+                    <input type="text" class="form-control" id="nome">
+                    <div class="" id="name_feedback">
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email">
+                    <div class="" id="email_feedback">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label for="stars" class="form-label">Voto</label>
+                    <input type="number" class="form-control" id="stars">
+                    <div class="" id="stars_feedback">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="comment" class="form-label">Commento</label>
+                    <textarea class="form-control" id="comment"></textarea>
+                    <div class="" id="comment_feedback">
+                    </div>
+                </div>
+                <div class="col-10">
+                    <button class="btn btn-primary" type="submit">Invia</button>
+                </div>
+            </form>
         </div>
     </div>
 </section>
@@ -59,7 +93,6 @@
             document.getElementById('ing_pizza' + pizza.id).innerHTML += ingredienti;
 
             if (pizza.comments){
-                show('comments')
                 console.log(pizza.comments)
                 renderCommentList('comments_row', pizza.comments)
             }
@@ -69,12 +102,12 @@
         return document.getElementById(id)
     }
 
-    function hide(id){
-        el(id).classList.add('d-none')
+    function addClass(id, cl){
+        el(id).classList.add(cl)
     }
 
-        function show(id) {
-            el(id).classList.remove('d-none')
+        function removeClass(id, cl) {
+            el(id).classList.remove(cl)
         }
 
     function renderCommentList(elementId, cList){
@@ -108,6 +141,71 @@
         `
         return commentHtml;
     }
+
+        function sendComment(e) {
+            e.preventDefault();
+            axios.post('/api/comment/', readInput()).then(resp => {
+                messageRegistered()
+            }).catch(error => {
+                handleFeedback(error.response.data.errors)
+            })
+        }
+
+        function readInput() {
+            let name = $('#nome').val()
+            let email = $('#email').val()
+            let stars = $('#stars').val()
+            let body = $('#comment').val()
+            let data = {
+                UserName: name === '' ? null : name,
+                UserEmail: email === '' ? null : email,
+                CommentText: body === '' ? null : body,
+                Stars: stars === '' ? null : stars,
+                PizzaId: @Model
+            }
+
+            return data
+        }
+
+        function messageRegistered() {
+            swal("Commento inserito correttamente!", "ok").then(() => location.reload())
+        }
+
+
+
+        function setFeedbackClasses(inputElement, messageElement, messageArray, invalid) {
+            if (invalid) {
+                messageElement.classList.add("invalid-feedback")
+                messageElement.innerHTML = messageArray[0]
+                inputElement.classList.add("is-invalid")
+            } else {
+                messageElement.classList.remove("invalid-feedback")
+                messageElement.innerHTML = ''
+                inputElement.classList.add("is-valid")
+                inputElement.classList.remove("is-invalid")
+            }
+
+        }
+
+
+        function handleFeedback(errors) {
+            const nameInput = document.getElementById('nome')
+            const nameFeedback = document.getElementById('name_feedback')
+            const emailInput = document.getElementById('email')
+            const emailFeedback = document.getElementById('email_feedback')
+            const titleInput = document.getElementById('titolo')
+            const titleFeedback = document.getElementById('title_feedback')
+            const bodyInput = document.getElementById('messaggio')
+            const bodyFeedback = document.getElementById('body_feedback')
+
+
+            setFeedbackClasses(nameInput, nameFeedback, errors.Name ?? '', 'Name' in errors)
+            setFeedbackClasses(emailInput, emailFeedback, errors.Email ?? '', 'Email' in errors)
+            setFeedbackClasses(titleInput, titleFeedback, errors.Title ?? '', 'Title' in errors)
+            setFeedbackClasses(bodyInput, bodyFeedback, errors.Body ?? '', 'Body' in errors)
+
+
+        }
 
 </script>
 }

@@ -13,5 +13,11 @@ namespace la_mia_pizzeria_static.Models.Repositories
         {
             return db.Comments.Where(c => c.PizzaId == pizzaId).ToList();
         }
+
+        public void Create(Comment comment)
+        {
+            db.Comments.Add(comment);
+            db.SaveChanges();
+        }
     }
 }

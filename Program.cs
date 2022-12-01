@@ -13,6 +13,7 @@ var connectionString = builder.Configuration.GetConnectionString("PizzaDbContext
 //builder.Services.AddDbContext<PizzaDbContext>();
 builder.Services.AddScoped<IDbPizzaRepository, DbPizzaRepository>();
 builder.Services.AddScoped<IDbCategoryRepository, DbCategoryRepository>();
+builder.Services.AddScoped<IDbCommentRepository, DbCommentRepository>();
 builder.Services.AddScoped<IDbIngredientRepository, DbIngredientRepository>();
 builder.Services.AddScoped<IDbMessageRepository, DbMessageRepository>();
 builder.Services.AddControllersWithViews();

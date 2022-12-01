@@ -3,5 +3,9 @@
     public interface IDbCommentRepository
     {
         List<Comment> Get(int pizzaId);
+        public void Create(Comment comment);
     }
+
+
+    
 }
