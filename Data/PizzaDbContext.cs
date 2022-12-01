@@ -11,6 +11,7 @@ namespace la_mia_pizzeria_static.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Comment> Comments { get; set; }
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
         //    optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=la-mia-pizzeria;Integrated Security=True;Encrypt=False");

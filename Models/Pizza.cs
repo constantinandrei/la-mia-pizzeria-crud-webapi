@@ -24,6 +24,7 @@ namespace la_mia_pizzeria_static.Models
         public int CategoryId { get; set; }
         public Category? Category { get; set; }
         public List<Ingredient>? Ingredients { get; set; }
+        public List<Comment> Comments { get; set; }
         public Pizza()
         {
         }
@@ -34,5 +35,6 @@ namespace la_mia_pizzeria_static.Models
             Image = image;
             Price = price;
         }
+        
     }
 }
